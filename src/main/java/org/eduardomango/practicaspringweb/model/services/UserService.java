@@ -1,6 +1,10 @@
 package org.eduardomango.practicaspringweb.model.services;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.eduardomango.practicaspringweb.model.entities.UserEntity;
 import org.eduardomango.practicaspringweb.model.exceptions.UserNotFoundException;
 import org.eduardomango.practicaspringweb.model.repositories.IRepository;
