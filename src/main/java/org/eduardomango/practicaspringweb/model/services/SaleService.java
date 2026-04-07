@@ -19,6 +19,7 @@ public class SaleService {
     private final IRepository<SaleEntity> saleRepository;
     private final ProductService productService;
     private final UserService userService;
+
     //METODOS
     public List<SaleEntity> findAll(){return saleRepository.findAll();}
 
@@ -26,7 +27,7 @@ public class SaleService {
         try {
             ProductEntity product=productService.findById(idProducto);
             UserEntity user= userService.findById(idCliente);
-            SaleEntity.builder()
+           return SaleEntity.builder()
                     .id(idProducto)
                     .products(product)
                     .quantity(cantidad)
@@ -36,11 +37,33 @@ public class SaleService {
         } catch (ProductNotFoundException e) {
             throw new ProductNotFoundException("");
         }
+    }
+    public SaleEntity findById(long id) {
+        return saleRepository.findAll()
+                .stream()
+                .filter(p -> p.getId() == id)
+                .findFirst()
+                .orElseThrow(ProductNotFoundException::new);
+    }
 
+    public void save (SaleEntity saleEntity){
+        saleRepository.save(saleEntity);
+    }
 
+    public void delete (SaleEntity saleEntity){
+        try {
+            saleRepository.delete(saleEntity);
+        } catch ( ProductNotFoundException e) {
+            throw new ProductNotFoundException("Elemento n o encontrado");
+        }
+    }
 
-
-
+    public void update (SaleEntity saleEntity){
+        try {
+            saleRepository.update(saleEntity);
+        }catch (ProductNotFoundException e) {
+            throw new ProductNotFoundException("Producto no encontrado");
+        }
     }
 
 
