@@ -23,11 +23,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity <UserEntity> getById (@PathVariable Long id){
-        try {
             return ResponseEntity.ok(user.findById(id));
-        } catch (ProductNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
     }
 
     @PostMapping
@@ -53,12 +49,8 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<UserEntity> deleteUser(@PathVariable Long id){
-        try {
-            user.delete(user.findById(id));
-            return ResponseEntity.ok().build();
-        }catch (ProductNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        user.delete(user.findById(id));
+        return ResponseEntity.ok().build();
     }
 
 

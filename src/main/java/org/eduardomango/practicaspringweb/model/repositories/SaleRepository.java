@@ -38,8 +38,10 @@ public class SaleRepository implements IRepository<SaleEntity> {
         return List.copyOf(sales);
     }
 
-    public void save(SaleEntity sale) {
+    public SaleEntity save(SaleEntity sale) {
+        sale.setId(this.sales.stream().count());
         sales.add(sale);
+        return sale;
     }
 
     public void delete(SaleEntity sale) {

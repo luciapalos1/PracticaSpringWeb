@@ -3,6 +3,7 @@ package org.eduardomango.practicaspringweb.model.Controller;
 import lombok.AllArgsConstructor;
 import org.eduardomango.practicaspringweb.model.entities.ProductEntity;
 import org.eduardomango.practicaspringweb.model.entities.SaleEntity;
+import org.eduardomango.practicaspringweb.model.entities.SaleResponse;
 import org.eduardomango.practicaspringweb.model.exceptions.ProductNotFoundException;
 import org.eduardomango.practicaspringweb.model.services.SaleService;
 import org.springframework.http.HttpStatus;
@@ -23,12 +24,8 @@ public class SaleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SaleEntity> findById (@PathVariable Long id){
-        try {
-            return ResponseEntity.ok(saleService.findById(id));
-        } catch (ProductNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<SaleResponse> findById (@PathVariable Long id){
+        return ResponseEntity.ok(saleService.findById(id));
     }
 
     @PostMapping
@@ -53,12 +50,8 @@ public class SaleController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<SaleEntity> deleteProduct(@PathVariable Long id){
-        try{
-            saleService.delete(saleService.findById(id));
-            return ResponseEntity.ok().build();
-        }catch (ProductNotFoundException e){
-            return ResponseEntity.notFound().build();
-        }
+        saleService.delete(saleService.findById(id));
+        return ResponseEntity.ok().build();
     }
 
 

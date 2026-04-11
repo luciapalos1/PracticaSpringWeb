@@ -40,8 +40,9 @@ public class ProductRepository implements IRepository<ProductEntity> {
         return List.copyOf(products);
     }
 
-    public void save(ProductEntity product) {
+    public ProductEntity save(ProductEntity product) {
         products.add(product);
+        return product;
     }
 
     public void delete(ProductEntity product) {

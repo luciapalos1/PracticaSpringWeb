@@ -6,7 +6,7 @@ public interface IRepository <T>{
 
     List<T> findAll();
 
-    void save(T ntitey);
+    T save(T ntitey);
 
     void delete(T entity);
 

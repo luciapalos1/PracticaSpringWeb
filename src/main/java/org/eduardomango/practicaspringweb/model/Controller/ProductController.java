@@ -1,5 +1,6 @@
 package org.eduardomango.practicaspringweb.model.Controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.eduardomango.practicaspringweb.model.entities.ProductEntity;
 import org.eduardomango.practicaspringweb.model.exceptions.ProductNotFoundException;
@@ -23,11 +24,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductEntity> findById (@PathVariable Long id){
-        try {
-            return ResponseEntity.ok(productService.findById(id));
-        } catch (ProductNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(productService.findById(id));
     }
 
     @PostMapping

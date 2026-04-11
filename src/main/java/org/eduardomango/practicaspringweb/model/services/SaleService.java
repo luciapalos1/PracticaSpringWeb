@@ -2,10 +2,9 @@ package org.eduardomango.practicaspringweb.model.services;
 
 
 import lombok.AllArgsConstructor;
-import org.eduardomango.practicaspringweb.model.entities.ProductEntity;
-import org.eduardomango.practicaspringweb.model.entities.SaleEntity;
-import org.eduardomango.practicaspringweb.model.entities.UserEntity;
+import org.eduardomango.practicaspringweb.model.entities.*;
 import org.eduardomango.practicaspringweb.model.exceptions.ProductNotFoundException;
+import org.eduardomango.practicaspringweb.model.exceptions.SaleNotFounException;
 import org.eduardomango.practicaspringweb.model.repositories.IRepository;
 import org.eduardomango.practicaspringweb.model.repositories.SaleRepository;
 import org.springframework.stereotype.Service;
@@ -23,27 +22,40 @@ public class SaleService {
     //METODOS
     public List<SaleEntity> findAll(){return saleRepository.findAll();}
 
-    public SaleEntity save(Long idProducto,Long idCliente, Long cantidad){
-        try {
-            ProductEntity product=productService.findById(idProducto);
-            UserEntity user= userService.findById(idCliente);
-           return SaleEntity.builder()
-                    .id(idProducto)
-                    .products(product)
-                    .quantity(cantidad)
-                    .client(user)
-                    .saleDate(LocalDate.now())
-                    .build();
-        } catch (ProductNotFoundException e) {
-            throw new ProductNotFoundException("");
-        }
+    public SaleResponse save(DtoSale dtoSale){
+        ProductEntity product=productService.findById(dtoSale.getIdProducto());
+        UserEntity user= userService.findById(dtoSale.getIdCliente());
+       SaleEntity entity = SaleEntity.builder()
+                .products(product)
+                .quantity(dtoSale.getCantidad())
+                .client(user)
+                .saleDate(LocalDate.now())
+                .build();
+
+       SaleEntity saved = saleRepository.save(entity);
+
+       return SaleResponse.builder()
+               .client(saved.getClient())
+               .id(saved.getId())
+               .products(saved.getProducts())
+               .quantity(saved.getQuantity())
+               .build();
     }
-    public SaleEntity findById(long id) {
-        return saleRepository.findAll()
+
+
+    public SaleResponse findById(long id) {
+       SaleEntity sale = saleRepository.findAll()
                 .stream()
                 .filter(p -> p.getId() == id)
                 .findFirst()
-                .orElseThrow(ProductNotFoundException::new);
+                .orElseThrow(SaleNotFounException::new);
+
+       return SaleResponse.builder()
+               .client(sale.getClient())
+               .id(sale.getId())
+               .products(sale.getProducts())
+               .quantity(sale.getQuantity())
+               .build();
     }
 
     public void save (SaleEntity saleEntity){
@@ -51,23 +63,11 @@ public class SaleService {
     }
 
     public void delete (SaleEntity saleEntity){
-        try {
-            saleRepository.delete(saleEntity);
-        } catch ( ProductNotFoundException e) {
-            throw new ProductNotFoundException("Elemento n o encontrado");
-        }
+        saleRepository.delete(saleEntity);
     }
 
     public void update (SaleEntity saleEntity){
-        try {
-            saleRepository.update(saleEntity);
-        }catch (ProductNotFoundException e) {
-            throw new ProductNotFoundException("Producto no encontrado");
-        }
+        saleRepository.update(saleEntity);
     }
-
-
-
-
 
 }

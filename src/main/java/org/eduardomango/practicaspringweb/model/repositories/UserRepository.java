@@ -40,8 +40,9 @@ public class UserRepository implements IRepository<UserEntity> {
         return List.copyOf(users);
     }
 
-    public void save(UserEntity user) {
+    public UserEntity save(UserEntity user) {
         users.add(user);
+        return user;
     }
 
     public void delete(UserEntity user) {
