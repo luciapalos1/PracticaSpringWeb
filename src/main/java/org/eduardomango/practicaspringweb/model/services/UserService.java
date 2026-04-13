@@ -5,9 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.eduardomango.practicaspringweb.model.Mapper.UserMapper;
+import org.eduardomango.practicaspringweb.model.entities.UserDTO;
 import org.eduardomango.practicaspringweb.model.entities.UserEntity;
 import org.eduardomango.practicaspringweb.model.exceptions.UserNotFoundException;
 import org.eduardomango.practicaspringweb.model.repositories.IRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,12 +27,14 @@ public class UserService {
     public List<UserEntity> findAll() {
         return userRepository.findAll();
     }
-    public UserEntity findById(long id) {
-        return userRepository.findAll()
+    public UserDTO findById(long id) {
+        UserEntity userEntity = userRepository.findAll()
                 .stream()
                 .filter(user -> user.getId() == id)
                 .findFirst()
                 .orElseThrow(UserNotFoundException::new);
+        UserMapper userMapper= new UserMapper();
+        return userMapper.toDTO(userEntity);
     }
 
     public UserEntity findByUsername(String username){

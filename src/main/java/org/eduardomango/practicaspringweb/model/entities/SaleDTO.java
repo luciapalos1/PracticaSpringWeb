@@ -2,16 +2,13 @@ package org.eduardomango.practicaspringweb.model.entities;
 
 import jakarta.validation.constraints.*;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
-
-import java.time.LocalDate;
 
 @AllArgsConstructor
 @Builder
 @ToString
 @Getter
 @Setter
-public class DtoSale {
+public class SaleDTO {
 
     @NotBlank(message = "Debe pasar un id de producto")
     private Long idProducto;

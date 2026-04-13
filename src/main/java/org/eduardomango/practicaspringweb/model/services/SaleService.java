@@ -2,11 +2,10 @@ package org.eduardomango.practicaspringweb.model.services;
 
 
 import lombok.AllArgsConstructor;
+import org.eduardomango.practicaspringweb.model.Mapper.UserMapper;
 import org.eduardomango.practicaspringweb.model.entities.*;
-import org.eduardomango.practicaspringweb.model.exceptions.ProductNotFoundException;
 import org.eduardomango.practicaspringweb.model.exceptions.SaleNotFounException;
 import org.eduardomango.practicaspringweb.model.repositories.IRepository;
-import org.eduardomango.practicaspringweb.model.repositories.SaleRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,12 +21,13 @@ public class SaleService {
     //METODOS
     public List<SaleEntity> findAll(){return saleRepository.findAll();}
 
-    public SaleResponse save(DtoSale dtoSale){
-        ProductEntity product=productService.findById(dtoSale.getIdProducto());
-        UserEntity user= userService.findById(dtoSale.getIdCliente());
+    public SaleResponse save(SaleDTO saleDTO){
+        ProductEntity product=productService.findById(saleDTO.getIdProducto());
+        UserMapper userMapper=new UserMapper();
+        UserEntity user= userMapper.toEntity(userService.findById(saleDTO.getIdCliente()));
        SaleEntity entity = SaleEntity.builder()
                 .products(product)
-                .quantity(dtoSale.getCantidad())
+                .quantity(saleDTO.getCantidad())
                 .client(user)
                 .saleDate(LocalDate.now())
                 .build();
