@@ -49,7 +49,7 @@ public class SaleController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<SaleEntity> deleteProduct(@PathVariable Long id){
+    public ResponseEntity<SaleResponse> deleteProduct(@PathVariable Long id){
         saleService.delete(saleService.findById(id));
         return ResponseEntity.ok().build();
     }

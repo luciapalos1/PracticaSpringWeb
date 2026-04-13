@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.eduardomango.practicaspringweb.model.entities.ProductEntity;
 import org.eduardomango.practicaspringweb.model.entities.SaleEntity;
+import org.eduardomango.practicaspringweb.model.entities.SaleResponse;
 import org.eduardomango.practicaspringweb.model.entities.UserEntity;
 import org.springframework.stereotype.Component;
 
@@ -44,7 +45,9 @@ public class SaleRepository implements IRepository<SaleEntity> {
         return sale;
     }
 
-    public void delete(SaleEntity sale) {
+    public void delete (SaleEntity sale){sales.remove(sale);}
+
+    public void delete(SaleResponse sale) {
         sales.remove(sale);
     }
 

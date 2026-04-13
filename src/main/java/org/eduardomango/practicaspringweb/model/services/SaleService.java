@@ -62,8 +62,16 @@ public class SaleService {
         saleRepository.save(saleEntity);
     }
 
-    public void delete (SaleEntity saleEntity){
-        saleRepository.delete(saleEntity);
+    public void delete (SaleResponse saleResponse){
+
+        SaleEntity sale= SaleEntity.builder()
+                .client(saleResponse.getClient())
+                .quantity(saleResponse.getQuantity())
+                .id(saleResponse.getId())
+                .products(saleResponse.getProducts())
+                .build();
+
+        saleRepository.delete(sale);
     }
 
     public void update (SaleEntity saleEntity){

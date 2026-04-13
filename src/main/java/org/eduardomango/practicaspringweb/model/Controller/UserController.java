@@ -16,7 +16,7 @@ import java.util.Optional;
 public class UserController {
     private final UserService user;
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity <List<UserEntity>> getAll() {
         return ResponseEntity.ok(user.findAll());
     }
