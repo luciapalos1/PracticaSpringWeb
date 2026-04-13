@@ -45,9 +45,7 @@ public class SaleRepository implements IRepository<SaleEntity> {
         return sale;
     }
 
-    public void delete (SaleEntity sale){sales.remove(sale);}
-
-    public void delete(SaleResponse sale) {
+    public void delete(SaleEntity sale) {
         sales.remove(sale);
     }
 

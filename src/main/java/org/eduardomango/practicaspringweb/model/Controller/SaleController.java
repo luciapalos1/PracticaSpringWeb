@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("api/sales")
 @AllArgsConstructor
 public class SaleController {
     private final SaleService saleService;
